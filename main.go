@@ -3,12 +3,32 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"os"
+	"runtime/trace"
 	"time"
 )
 
+func addTrace() {
+
+}
+
 func main() {
-	result := ValidParentheses("(())((()())())")
-	fmt.Println(result)
+	//result := ValidParentheses("(())((()())())")
+	//fmt.Println(result)
+	f, err := os.Create("./trace.out")
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	err = trace.Start(f)
+	if err != nil {
+		panic(err)
+	}
+
+	defer trace.Stop()
+
+	check()
 }
 
 func ValidParentheses(parens string) bool {
